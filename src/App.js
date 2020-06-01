@@ -28,8 +28,8 @@ function App() {
       <button disabled={toggle} onClick={startGame}>
         START
       </button>
+      <h4>Word Count: {wordsCount}</h4>
       <h4>Highscore: {highScore}</h4>
-      <h4>count: {wordsCount}</h4>
     </>
   );
 }
