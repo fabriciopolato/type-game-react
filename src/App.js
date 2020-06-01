@@ -12,7 +12,7 @@ function App() {
     startGame,
     highScore,
     wordsCount,
-  } = useWordGame();
+  } = useWordGame(10);
 
   return (
     <>

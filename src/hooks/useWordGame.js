@@ -1,10 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 
-const useWordGame = () => {
-  const STARTING_TIME = 10;
-
+const useWordGame = (startingTime = 10) => {
   const [typedWords, setTypedWords] = useState("");
-  const [timer, setTimer] = useState(STARTING_TIME);
+  const [timer, setTimer] = useState(startingTime);
   const [toggle, setToggle] = useState(false);
   const [wordsCount, setWordsCount] = useState(0);
   const [highScore, setHighScore] = useState(0);
@@ -35,7 +33,7 @@ const useWordGame = () => {
 
   const startGame = () => {
     setToggle(true);
-    setTimer(STARTING_TIME);
+    setTimer(startingTime);
     setTypedWords("");
     inputRef.current.disabled = false;
     inputRef.current.focus();
