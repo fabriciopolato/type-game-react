@@ -5,9 +5,33 @@ const useWordGame = (startingTime = 10) => {
   const [timer, setTimer] = useState(startingTime);
   const [toggle, setToggle] = useState(false);
   const [wordsCount, setWordsCount] = useState(0);
-  const [highScore, setHighScore] = useState(0);
-
   const inputRef = useRef(null);
+
+  const [highScore, setHighScore] = useState(() => {
+    const localHighstore = localStorage.getItem("highscore");
+
+    if (localHighstore) {
+      return JSON.parse(localStorage.getItem("highscore"));
+    } else {
+      return 0;
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem("highscore", JSON.stringify(highScore));
+  }, [highScore]);
+
+  useEffect(() => {
+    if (timer > 0 && toggle) {
+      setWordsCount(0);
+      setTimeout(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+    } else if (timer === 0) {
+      endGame();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timer, toggle]);
 
   const handleChange = (event) => {
     setTypedWords(event.target.value);
@@ -44,18 +68,6 @@ const useWordGame = (startingTime = 10) => {
     setToggle(false);
     calculateHighScore();
   };
-
-  useEffect(() => {
-    if (timer > 0 && toggle) {
-      setWordsCount(0);
-      setTimeout(() => {
-        setTimer((prevTimer) => prevTimer - 1);
-      }, 1000);
-    } else if (timer === 0) {
-      endGame();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timer, toggle]);
 
   return {
     inputRef,
